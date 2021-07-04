@@ -27,22 +27,21 @@ namespace arraymanipulation
         public static long arrayManipulation(int n, List<List<int>> queries)
         {
             // Initialize array
-            long[] arr = new long[n];
+            long[] arr = new long[n+2];
             long max = 0;
-
-            // Iterate over each set of instructions.
+            long sum = 0;
             foreach(var abk in queries)
             {
-                
-                // Start at index a, iterate till index b
-                // Add k to the value at the index.
-                // Is there a faster way to do this than a for loop?
-                for(int i = abk[0]-1; i <=abk[1]-1 && i < n; i++)
-                {
-                    arr[i] += abk[2];
-                }
+                arr[abk[0]] += abk[2];
+                arr[abk[1]+1] -= abk[2];
             }
-            return arr.Max();
+            // Compute prefix sum and return max
+            foreach(var val in arr.ToList())
+            {
+                sum += val;
+                max = (sum > max) ? sum : max;
+            }
+            return max;
         }
 
     }

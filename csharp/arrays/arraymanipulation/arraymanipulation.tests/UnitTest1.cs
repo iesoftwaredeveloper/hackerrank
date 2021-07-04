@@ -40,7 +40,7 @@ namespace arraymanipulation.tests
                 new List<int>{2,6,8},
                 new List<int>{3,5,7},
                 new List<int>{1,8,1},
-                new List<int>{5,8,15}
+                new List<int>{5,9,15}
             };
             var sut = Result.arrayManipulation(n, queries);
             Assert.Equal(31, sut);
