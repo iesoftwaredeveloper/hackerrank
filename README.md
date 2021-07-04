@@ -1,6 +1,6 @@
 # hackerrank
 
-## These represent my solutions to some of the challenges on HackerRank.
+These represent my solutions to some of the challenges on HackerRank.
 
 ## Arrays
 
