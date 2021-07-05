@@ -17,32 +17,19 @@ namespace ransomnote
 
         public static bool checkMagazine(List<string> magazine, List<string> note)
         {
-            // Brute force method
-            // Hint: Since title has "Hash Tables", probably should use a hash table.
-            // Check each word in note to see if it exists in magazine.
-            // And exists enough times.
-            Dictionary<string, int> hashMag = new();
+            // Use Linq
+            Dictionary<string, int> wordCntMagazine = magazine.GroupBy(w => w).Select(w => new { Word = w.Key, Count = w.Count() }).ToDictionary(w => w.Word, w => w.Count);
+            Dictionary<string, int> wordCntNote = note.GroupBy(w => w).Select(w => new { Word = w.Key, Count = w.Count() }).ToDictionary(w => w.Word, w => w.Count);
 
-            foreach (var word in magazine)
+            foreach(var word in wordCntNote.Keys)
             {
-                if (hashMag.TryGetValue(word, out int cnt))
-                {
-                    hashMag[word] += 1;
-                }
-                else
-                {
-                    hashMag[word] = 1;
-                }
-            }
-            foreach (var word in note)
-            {
-                if (!hashMag.Keys.Contains(word) || hashMag[word] <= 0)
+                if(!wordCntMagazine.TryGetValue(word, out int wordCnt) || wordCntNote[word] > wordCnt)
                 {
                     Console.WriteLine("No");
                     return false;
                 }
-                hashMag[word] -= 1;
             }
+
             Console.WriteLine("Yes");
             return true;
         }
