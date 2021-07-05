@@ -1,64 +1,51 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-
+using System.Linq;
 namespace twostrings
 {
-public class Result
-{
-
-    /*
-     * Complete the 'twoStrings' function below.
-     *
-     * The function is expected to return a STRING.
-     * The function accepts following parameters:
-     *  1. STRING s1
-     *  2. STRING s2
-     */
-
-    public static string twoStrings(string s1, string s2)
+    public class Result
     {
-        // One approach is to take a substring of s1 of size 1
-        // See if that is in s2.
-        // Given that a substring can be as small as 1 character, we only need to find one matching character to say YES.
-        
 
-        // Brute force is to search for occurrence of a character in s1 in s2 using a loop.
-        // This is O(n*m) and is horrible performance.
-        foreach(var c1 in s1)
+        /*
+         * Complete the 'twoStrings' function below.
+         *
+         * The function is expected to return a STRING.
+         * The function accepts following parameters:
+         *  1. STRING s1
+         *  2. STRING s2
+         */
+
+        public static string twoStrings(string s1, string s2)
         {
-            foreach(var c2 in s2)
-            {
-                if(c1 == c2)
-                    return "YES";
-            }
+            // Provided the set of characters in s1 and s2 intersect by any number, then they share at least one substring.        
+            return (s1.Intersect(s2).Count() > 0) ? "YES" : "NO";
         }
-        return "NO";
-    }
 
-}
+    }
     class Program
     {
         static void Main(string[] args)
         {
-   {
-        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+            {
+                TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
 
-        int q = Convert.ToInt32(Console.ReadLine().Trim());
+                int q = Convert.ToInt32(Console.ReadLine().Trim());
 
-        for (int qItr = 0; qItr < q; qItr++)
-        {
-            string s1 = Console.ReadLine();
+                for (int qItr = 0; qItr < q; qItr++)
+                {
+                    string s1 = Console.ReadLine();
 
-            string s2 = Console.ReadLine();
+                    string s2 = Console.ReadLine();
 
-            string result = Result.twoStrings(s1, s2);
+                    string result = Result.twoStrings(s1, s2);
 
-            textWriter.WriteLine(result);
+                    textWriter.WriteLine(result);
+                }
+
+                textWriter.Flush();
+                textWriter.Close();
+            }
         }
-
-        textWriter.Flush();
-        textWriter.Close();
-    }        }
     }
 }
