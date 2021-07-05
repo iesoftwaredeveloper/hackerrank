@@ -10,28 +10,35 @@ namespace counttriplets
     {
         public static long countTriplets(List<long> arr, long r)
         {
-            // Brute force method.
-            // Start at first index, then check remaining for match.
-            // Stop if get to 3 matches or end of list.
-            // Horrible performance
             long count = 0;
-            for (int i = 0; i < arr.Count(); i++)
-            {
-                for (int j = i + 1; j < arr.Count(); j++)
-                {
-                    if (arr[j] == arr[i] * r)
-                    {
-                        for (int k = j + 1; k < arr.Count(); k++)
-                        {
-                            if (arr[k] == arr[j] * r)
-                            {
-                                count++;
-                            }
-                        }
-                    }
-                }
-            }
+            long arrSize = arr.LongCount();
+            // Condition where we don't have enough elements.
+            //Console.WriteLine($"Array Size: {arrSize}");
+            if (arrSize < 3)
+                return count;
 
+            Dictionary<long, int> left = arr.GroupBy(n => n).Select(x => new { k = x.Key, v = x.Count() }).ToDictionary(x => x.k, x => 0); // Initially all items with zero count
+            Dictionary<long, int> right = arr.GroupBy(n => n).Select(x => new { k = x.Key, v = x.Count() }).ToDictionary(x => x.k, x => x.v); // Initially all items
+
+            // Start pivoting at first item
+            for (int j = 0; j < arrSize - 1; j++)
+            {
+                // Test if element is a factor
+                // Test if left dictionary has any factor
+                // Test if right dictionary has any factor
+                right[arr[j]]--; // Current element
+                bool lExists = left.TryGetValue(arr[j] / r, out int lcnt);
+                bool rExists = right.TryGetValue(arr[j] * r, out int rcnt);
+                //Console.Write($"pivot {j}:{arr[j]} left: [{string.Join(", ", arr.GetRange(0,j))}] right: [{string.Join(", ", arr.GetRange(j+1, arr.Count()-(j+1)))}]");
+                if (lExists && rExists && arr[j] % r == 0)
+                {
+                    // We have a triplet
+                    // Be sure to cast to long to avoid overflow
+                    count += ((long)lcnt * (long)rcnt);
+                }
+                //Console.WriteLine($" count: {count}");
+                left[arr[j]] += 1;
+            }
             return count;
         }
 
