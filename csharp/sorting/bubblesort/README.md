@@ -6,10 +6,8 @@ Given an array of integers, sort the array in ascending order using Bubble Sort 
 
 Once sorted, print three lines:
 
-> Array is sorted in *numSwaps* swaps
-> 
-> First Element: *firstElement*
-> 
+> Array is sorted in *numSwaps* swaps  
+> First Element: *firstElement*  
 > Last Element: *lastElement*
 
 Use the following algorithm:
