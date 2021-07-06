@@ -13,11 +13,19 @@ namespace bubblesort
          * The function accepts INTEGER_ARRAY a as parameter.
          */
 
+        /// <summary>
+        /// Implement using algorithm required by instructions.
+        /// Change from passing a list to an array.
+        /// Use references to swap elements instead of values to reduce memory usage.
+        /// Using a List does not guarantee order depending on implementation of List.
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
         public static int[] countSwaps(int[] items)
         {
             int numSwaps = 0;
             int n = items.Length;
-            ref int firstElement = ref items[0], lastElement = ref items[n-1];
+            ref int firstElement = ref items[0], lastElement = ref items[n - 1];
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n - 1; j++)
@@ -30,7 +38,7 @@ namespace bubblesort
                     }
                 }
             }
-            
+
             Console.WriteLine($"Array is sorted in {numSwaps} swaps.");
             Console.WriteLine($"First Element: {firstElement}");
             Console.WriteLine($"Last Element: {lastElement}");
