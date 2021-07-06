@@ -58,6 +58,7 @@ namespace frequencyqueries.tests
             var sut = Program.freqQuery(queries);
             Assert.Equal(expected, sut);
         }
+        
         [Fact]
         public void Test4()
         {
