@@ -65,6 +65,13 @@ Some edge cases to consider when iterating over the array.
 - A single postive number.  When all numbers are negative except for one entry then the sub-array will be of size 1.
 - Maximum value of zero. When the maximum entry is zero, this is the equivalent of all negative values.
 
+#### Negative Values
+
+A slight change to the algorithm will allow for less than zero sum. This allows for the edge cases where the highest value is 0 or where all of the values are negative.
+
+This slight change can be applied to just computing the sum or computing the actual sub-array.
+
+By moving the check for a current sum of less than zero to after the maximum sum is tested you can now detect both of these edge cases.
 ## Implementation: The subarray
 
 In this implementation we want to know what the actual sub-array is that has the largest sum.  We are not concerned with the actual sum, just that the sub-array will contain the values that will result in the maximum sum.
