@@ -18,54 +18,31 @@ namespace fraudulentactivitynotifications
 
         public static int activityNotifications(List<int> expenditure, int d)
         {
-            // Compute the size of the array used to store median values.
-            decimal[] lookback = new decimal[d]; // Store current look back values.
-
-
             int notificationCount = 0;
 
-            // Edge case
-            // If the number of previous days i <= total days
-            if (d >= expenditure.Count())
-                return notificationCount;
-
-            // Compute the median for each day.
-            // We start with the first item and take up to the number of lookback days.
-            Console.WriteLine(">>>>>");
-            Console.WriteLine(string.Join(", ", expenditure.Select(x => x)));
-
-            int ma_index = 0;
-            for (int i = 0; i < expenditure.Count()-1; i++)
+            Console.WriteLine($"<<< {d}");
+            Console.WriteLine(string.Join(", ",  expenditure.Select(x => x)));
+            for (int i = 0; i < expenditure.Count() - d; i++)
             {
-                lookback[ma_index] = expenditure[i] / Convert.ToDecimal(d);
-                decimal ma = 0.0M;
-                for (int j = 0; j < d; j++)
+                // Check for even case
+                decimal median = 0;
+                var arr = expenditure.Skip(i).Take(d).OrderBy(x => x).ToArray();
+                if (d % 2 != 0)
                 {
-                    ma += lookback[j];
+                    median = arr[d / 2];
                 }
-                if(i >= d-1 && expenditure[i+1] >= (ma*2))
+                else
                 {
+                    median = (arr[(d-1)/2] + arr[d/2]) / 2.0M;
+                }
+                if(expenditure[d+i] >= (median*2))
                     notificationCount++;
-                }
-                Console.WriteLine($"{i+1}: {ma} {ma*2} {expenditure[i+1]} {notificationCount}");
-                ma_index = (ma_index+1) % d;                
+                Console.WriteLine($"{i}: {median*2} {expenditure[i+d]} {notificationCount}");
             }
 
             return notificationCount;
         }
 
-        // Given a list of expenditures, return the median
-        // We use decimal instead of float for accuracy purposes.
-        static decimal computeMedian(List<int> expenditure)
-        {
-            
-            return expenditure.Average(num => Convert.ToDecimal(num));
-        }
-
-        static decimal computeThreshold(decimal expenditure)
-        {
-            return expenditure * 2;
-        }
     }
 
     class Program
