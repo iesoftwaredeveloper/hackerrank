@@ -53,7 +53,7 @@ namespace maximumsubarray
                     maxStart = currentStart;
                     maxEnd = currentEnd;
                 }
-                if (currentSum < 0)
+                if (currentSum < 0) // this is key to longest sub-array
                 {
                     currentSum = 0; // Reset the sum
                     currentStart = currentEnd + 1; // Restart the start index.
