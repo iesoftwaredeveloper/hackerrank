@@ -19,25 +19,36 @@ namespace fraudulentactivitynotifications
         public static int activityNotifications(List<int> expenditure, int d)
         {
             // Compute the size of the array used to store median values.
-            decimal[] median = new decimal[expenditure.Count() - d];
-            decimal[] threshold = new decimal[expenditure.Count() - d];
+            decimal[] lookback = new decimal[d]; // Store current look back values.
+
+
             int notificationCount = 0;
+
+            // Edge case
+            // If the number of previous days i <= total days
+            if (d >= expenditure.Count())
+                return notificationCount;
 
             // Compute the median for each day.
             // We start with the first item and take up to the number of lookback days.
             Console.WriteLine(">>>>>");
-            Console.WriteLine(string.Join(", ",  expenditure.Select(x => x)));
-            for (int i = 0; i + d < expenditure.Count(); i++)
+            Console.WriteLine(string.Join(", ", expenditure.Select(x => x)));
+
+            int ma_index = 0;
+            for (int i = 0; i < expenditure.Count()-1; i++)
             {
-                // Skip the first i elements and take the next d.
-                median[i] = computeMedian(expenditure.Skip(i).Take(d).ToList());
-                // Now compute each days notification threshold
-                threshold[i] = computeThreshold(median[i]);
-                if(expenditure[d+i] >= threshold[i])
+                lookback[ma_index] = expenditure[i] / Convert.ToDecimal(d);
+                decimal ma = 0.0M;
+                for (int j = 0; j < d; j++)
+                {
+                    ma += lookback[j];
+                }
+                if(i >= d-1 && expenditure[i+1] >= (ma*2))
                 {
                     notificationCount++;
                 }
-                Console.WriteLine($"{median[i]} {threshold[i]} {expenditure[d+i]}");
+                Console.WriteLine($"{i+1}: {ma} {ma*2} {expenditure[i+1]} {notificationCount}");
+                ma_index = (ma_index+1) % d;                
             }
 
             return notificationCount;
@@ -47,6 +58,7 @@ namespace fraudulentactivitynotifications
         // We use decimal instead of float for accuracy purposes.
         static decimal computeMedian(List<int> expenditure)
         {
+            
             return expenditure.Average(num => Convert.ToDecimal(num));
         }
 

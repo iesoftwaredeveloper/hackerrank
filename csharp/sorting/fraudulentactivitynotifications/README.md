@@ -24,3 +24,8 @@ The lookup will be the current day minus the number of lookback days *d*. If we 
 
 The size of the array to store median expenditures in is the number of expenditures - the lookback days.
 
+## RTFM
+
+The intial implmentation "works" but isn't peformant.  Actually it doesn't work.  It does work to solve the problem I wrote the code to do.  What it does *not* do is solve the problem presented. :)
+
+When you RTFM you realize it was asking for a median and not a mean.  So no computation needed when you pull the previous *d* days numbers.  Just sort them and then return the middle value.

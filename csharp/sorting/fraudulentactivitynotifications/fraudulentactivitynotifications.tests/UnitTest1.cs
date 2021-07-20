@@ -11,6 +11,7 @@ namespace fraudulentactivitynotifications.tests
         {
             new object[] { new List<int> {2, 3, 4, 2, 3, 6, 8, 4, 5}, 5, 2},
             new object[] { new List<int> {10, 20, 30, 40, 50}, 3, 1},
+            new object[] { new List<int> {10, 20, 30, 40, 50}, 5, 0},
             new object[] { new List<int> {1,2,3,4,4}, 4, 0},
         };
 
